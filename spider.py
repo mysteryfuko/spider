@@ -8,7 +8,6 @@ from retrying import retry
 @retry(wait_random_min=1000,wait_random_max=5000)
 def get_html(url):
   'url'
-  print('try')
   session = HTMLSession(
     browser_args=[
 				'--no-sand',
@@ -17,11 +16,10 @@ def get_html(url):
     )#设置浏览器user-agent
   response = session.get(url)
   response.html.render(timeout=30)
-  print('done'+ url )
   return response
   
 if __name__ == "__main__":
-  fightID = "4qXdLBTcPgFAbwHM"
+  fightID = input("输入WCL识别符：")
   boss_id_url = "https://cn.classic.warcraftlogs.com/reports/fights-and-participants/"+ fightID +"/0"
 
   '获取详细boss战ID 请求URL 返回json'
@@ -33,7 +31,8 @@ if __name__ == "__main__":
       #生产详细战斗boss及战斗id列表
       temp = {'name':str(i['name']),'fightID':str(i['id'])}
       fight_data.append(temp)
-
+  MCDkp = ['鲁西弗隆','玛格曼达','基赫纳斯','迦顿男爵','沙斯拉尔','加尔','萨弗隆先驱者','焚化者古雷曼格','管理者埃克索图斯','熔岩爆发']
+  BWLDkp = ['狂野的拉佐格尔','堕落的瓦拉斯塔兹','勒什雷尔','费尔默','埃博诺克','弗莱格尔','克洛玛古斯','奈法利安']
   #遍历boss ID列表匹配friendlies列表
   reslot = []
   for i in fight_data:
